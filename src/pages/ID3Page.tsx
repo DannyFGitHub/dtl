@@ -11,8 +11,7 @@ import Typography from "@mui/material/Typography";
 import { DropDownSelect } from "../components/DropDownSelect";
 import { Entropy } from "../util/equations";
 import TextField from "@mui/material/TextField";
-import CsvDownloadButton from "react-json-to-csv";
-import { styled } from "@mui/material/styles";
+import { CustomDownloadDataButton } from "../components/CustomCSVDownloadButton";
 import { generateSeed } from "../util/equations";
 import { CategorySubset } from "../datagenerator/types";
 
@@ -22,21 +21,6 @@ const initialMaxUnique = 3;
 const initialMaxCategoryCount = -1;
 const initialSeed = generateSeed();
 const GenerateAllNominalData = GenerateWeatherNominalData;
-
-const CustomDownloadDataButton = styled(CsvDownloadButton)(({ theme }) => ({
-  padding: theme.spacing(1, 2),
-  borderRadius: theme.shape.borderRadius,
-  transition: "all 150ms ease",
-  fontFamily: theme.typography.fontFamily,
-  fontWeight: theme.typography.fontWeightMedium,
-  fontSize: theme.typography.pxToRem(14),
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
-  "&:hover": {
-    backgroundColor: theme.palette.primary.dark,
-    boxShadow: theme.shadows[2],
-  },
-}));
 
 export function ID3Page() {
   const [currentSeed, setCurrentSeed] = useState(initialSeed);
@@ -299,6 +283,7 @@ export function ID3Page() {
               {nominalData ? (
                 <Box p={1}>
                   <CustomDownloadDataButton
+                    delimiter=","
                     filename={`data-seed_${currentSeed}-min_${minUnique}-max_${maxUnique}-records_${recordCount}.csv`}
                     data={nominalData}
                   />
