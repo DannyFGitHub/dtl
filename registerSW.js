@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('https://dannyfgithub.github.io/dtl/sw.js', { scope: 'https://dannyfgithub.github.io/dtl/' })})}
