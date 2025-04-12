@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "workbench.colorTheme": "Default Light+",
+    "workbench.iconTheme": "vs-seti",
+    "window.autoDetectColorScheme": true,
+    "telemetry.feedback.enabled": false,
+    "dotnetAcquisitionExtension.enableTelemetry": false
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node-terminal",
+        "name": "Run Script: dev",
+        "request": "launch",
+        "command": "npm run dev",
+        "cwd": "${workspaceFolder}"
+      }
+    ]
+  }
+}
