@@ -8,18 +8,21 @@ import TableRow from "@mui/material/TableRow";
 
 export function DataTable({
   data,
+  caption = "",
 }: {
   data: {
     [key: string]: number | string;
   }[];
+  caption?: string;
 }) {
   if (!data || data.length < 1) {
     return null;
   }
 
   return (
-    <TableContainer elevation={3} component={Paper}>
-      <Table>
+    <TableContainer elevation={3} component={Paper} sx={{ maxHeight: "75vh" }}>
+      <Table stickyHeader size="small">
+        {caption ? <caption>{caption}</caption> : null}
         <TableHead>
           <TableRow>
             {Object.keys(data[0]).map((k, index) => {

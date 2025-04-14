@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { ToggleDarkMode } from "../components/ToggleDarkMode";
 import Box from "@mui/material/Box";
-import { GenerateAllNominalData } from "../datagenerator/Generator";
+import {
+  // GenerateEmployeeNominalData,
+  GenerateWeatherNominalData,
+} from "../datagenerator/Generator";
 import { DataTable } from "../components/DataTable";
 import { CreateSubsetsByCategory } from "../datagenerator/Subset";
 import Typography from "@mui/material/Typography";
@@ -16,7 +19,9 @@ import { CategorySubset } from "../datagenerator/types";
 const initialRecordCount = 5;
 const initialMinUnique = 2;
 const initialMaxUnique = 3;
+const initialMaxCategoryCount = -1;
 const initialSeed = generateSeed();
+const GenerateAllNominalData = GenerateWeatherNominalData;
 
 const CustomDownloadDataButton = styled(CsvDownloadButton)(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -41,12 +46,16 @@ export function ID3Page() {
       recordCount: initialRecordCount,
       minUnique: initialMinUnique,
       maxUnique: initialMaxUnique,
+      maxCategoryCount: initialMaxCategoryCount,
       seed: initialSeed,
     })
   );
   const [recordCount, setRecordCount] = useState<number>(initialRecordCount);
   const [minUnique, setMinUnique] = useState<number>(initialMinUnique);
   const [maxUnique, setMaxUnique] = useState<number>(initialMaxUnique);
+  const [maxCategoryCount, setMaxCategoryCount] = useState<number>(
+    initialMaxCategoryCount
+  );
 
   const [targetLabel, setTargetLabel] = useState<string>("");
   const [targetEntropy, setTargetEntropy] = useState<number>(0);
@@ -59,10 +68,11 @@ export function ID3Page() {
         recordCount: recordCount,
         minUnique: minUnique,
         maxUnique: maxUnique,
+        maxCategoryCount: maxCategoryCount,
         seed: currentSeed,
       })
     );
-  }, [recordCount, minUnique, maxUnique, currentSeed]);
+  }, [recordCount, minUnique, maxUnique, currentSeed, maxCategoryCount]);
 
   useEffect(() => {
     if (targetLabel) {
@@ -176,7 +186,10 @@ export function ID3Page() {
               Nominal Data Table
             </Typography>
             <Box p={1}>
-              <DataTable data={nominalData} />
+              <DataTable
+                data={nominalData}
+                // caption={`Nominal Data`}
+              />
             </Box>
           </Box>
 
@@ -242,6 +255,23 @@ export function ID3Page() {
                     let val = parseInt(e.target.value);
                     if (val >= minUnique && val > 0) {
                       setMaxUnique(val);
+                    }
+                  }}
+                />
+                <TextField
+                  id="maxcategorycount-number"
+                  label="maxCategoryCount"
+                  type="number"
+                  slotProps={{
+                    inputLabel: {
+                      shrink: true,
+                    },
+                  }}
+                  value={maxCategoryCount}
+                  onChange={(e) => {
+                    let val = parseInt(e.target.value);
+                    if (val > 0) {
+                      setMaxCategoryCount(val);
                     }
                   }}
                 />
@@ -340,7 +370,10 @@ export function ID3Page() {
                         scrollSnapAlign: "start",
                       }}
                     >
-                      <DataTable data={subtable.subset} />
+                      <DataTable
+                        data={subtable.subset}
+                        // caption={`${tabByVal.categoryName}:${subtable.categoryValue}`}
+                      />
                     </Box>
                   </Box>
                   <Box flex={1}>
@@ -373,10 +406,11 @@ export function ID3Page() {
                         }).res}
                     </Typography>
                     <Typography p={1} variant="body2">
-                      Information Gain is now the global entropy minus the
-                      subset entropy of the target label under the records that
-                      have the current value {subtable.categoryValue} for
-                      attribute {tabByVal.categoryName} which is equal to :{" "}
+                      Information Gain is now the subset's tartget class entropy
+                      minus the subset entropy of the target label under the
+                      records that have the current value{" "}
+                      {subtable.categoryValue} for attribute{" "}
+                      {tabByVal.categoryName} which is equal to :{" "}
                       {targetEntropy -
                         (subtable.subset.length / nominalData.length) *
                           Entropy({
