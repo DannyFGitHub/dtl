@@ -375,7 +375,7 @@ export function ID3Page() {
                       }
                     </Typography>
                     <Typography p={1} variant="body2">
-                      Information is the probability of "
+                      Information is the proportionality of "
                       {subtable.categoryValue}" value over total record count.{" "}
                       {subtable.subset.length} {" / "} {nominalData.length} ={" "}
                       {subtable.subset.length / nominalData.length} x Entropy of{" "}
