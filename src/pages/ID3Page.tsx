@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToggleDarkMode } from "../components/ToggleDarkMode";
 import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
 import {
   // GenerateEmployeeNominalData,
   GenerateWeatherNominalData,
@@ -117,9 +118,11 @@ export function ID3Page() {
           <Typography align="center" variant="h1">
             ID3 Algorithm
           </Typography>
-          <Typography align="center" variant="h4">
-            Iterative Dichotomiser 3
-          </Typography>
+          <Link href="https://link.springer.com/article/10.1007/BF00116251">
+            <Typography align="center" variant="h4">
+              Iterative Dichotomiser 3
+            </Typography>
+          </Link>
           <Typography align="center" variant="body1">
             ID3 Algorithm Decision Tree out of Nominal values dataset
           </Typography>
