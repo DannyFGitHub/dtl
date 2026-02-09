@@ -1,2 +1,2 @@
 # Decision Tree Learning
-A visual demonstration to represent decision tree learning. (DTL)
+An ID3-on-paper builder assistant to represent decision tree learning. (DTL)
